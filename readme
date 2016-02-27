@@ -1,0 +1,4 @@
+#re-create sift features(optional, takes long time)
+./run.sift.sh
+#run classifier
+./run.med.sh
