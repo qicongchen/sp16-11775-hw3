@@ -13,19 +13,22 @@ if __name__ == '__main__':
         print "output_file -- path to save the selected frames (feature vectors)"
         exit(1)
 
-    file_list = sys.argv[1]; output_file = sys.argv[3]
+    file_list = sys.argv[1]
+    output_file = sys.argv[3]
     ratio = float(sys.argv[2])
 
-    fread = open(file_list,"r")
-    fwrite = open(output_file,"w")
+    fread = open(file_list, "r")
+    fwrite = open(output_file, "w")
 
     # random selection is done by randomizing the rows of the whole matrix, and then selecting the first 
     # num_of_frame * ratio rows
     numpy.random.seed(18877)
 
-    for line in fread.readlines():
-        mfcc_path = "mfcc/" + line.replace('\n','') + ".mfcc.csv"
-        if os.path.exists(mfcc_path) == False:
+    for i, line in enumerate(fread.readlines()):
+        if i % 20 != 0:  # further sample
+            continue
+        mfcc_path = "mfcc/" + line.replace('\n', '') + ".mfcc.csv"
+        if os.path.exists(mfcc_path) is False:
             continue
         array = numpy.genfromtxt(mfcc_path, delimiter=";")
         numpy.random.shuffle(array)
