@@ -24,9 +24,7 @@ if __name__ == '__main__':
     # num_of_frame * ratio rows
     numpy.random.seed(18877)
 
-    for i, line in enumerate(fread.readlines()):
-        if i % 20 != 0:  # further sample
-            continue
+    for line in fread.readlines():
         mfcc_path = "mfcc/" + line.replace('\n', '') + ".mfcc.csv"
         if os.path.exists(mfcc_path) is False:
             continue
