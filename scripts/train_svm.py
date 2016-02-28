@@ -34,7 +34,7 @@ if __name__ == '__main__':
     for line in fread_label.readlines():
         tokens = line.strip().split(' ')
         video_id = tokens[0]
-        if tokens[1] == "NULL":
+        if tokens[1] != event_name:
             label = -1
         else:
             label = 1
