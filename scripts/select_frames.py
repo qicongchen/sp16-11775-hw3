@@ -13,42 +13,28 @@ if __name__ == '__main__':
         print "output_file -- path to save the selected frames (feature vectors)"
         exit(1)
 
-    file_list = sys.argv[1]
-    output_file = sys.argv[3]
+    file_list = sys.argv[1]; output_file = sys.argv[3]
     ratio = float(sys.argv[2])
 
-    fread = open(file_list, "r")
-    fwrite = open(output_file, "w")
+    fread = open(file_list,"r")
+    fwrite = open(output_file,"w")
 
     # random selection is done by randomizing the rows of the whole matrix, and then selecting the first 
     # num_of_frame * ratio rows
     numpy.random.seed(18877)
 
     for line in fread.readlines():
-        video_id = line.replace('\n', '')
-        sift_dir = "sift/" + video_id + "/"
-        if os.path.exists(sift_dir) is False:
+        mfcc_path = "mfcc/" + line.replace('\n','') + ".mfcc.csv"
+        if os.path.exists(mfcc_path) == False:
             continue
-        for sift_file in os.listdir(sift_dir):
-            if '.sift' not in sift_file:
-                continue
-            # if no key point, why an empty file??
-            if os.stat(sift_dir+sift_file).st_size == 0:
-                os.remove(sift_dir+sift_file)
-                continue
-            sift_id = sift_file.split('.sift')[0]
+        array = numpy.genfromtxt(mfcc_path, delimiter=";")
+        numpy.random.shuffle(array)
+        select_size = int(array.shape[0] * ratio)
+        feat_dim = array.shape[1]
 
-            array = numpy.genfromtxt(sift_dir+sift_file, delimiter=";")
-            # if only one key point
-            if len(array.shape) == 1:
-                continue
-            numpy.random.shuffle(array)
-            select_size = int(array.shape[0] * ratio)
-            feat_dim = array.shape[1]
-
-            for n in xrange(select_size):
-                line = str(array[n][0])
-                for m in range(1, feat_dim):
-                    line += ';' + str(array[n][m])
-                fwrite.write(line + '\n')
+        for n in xrange(select_size):
+            line = str(array[n][0])
+            for m in range(1, feat_dim):
+                line += ';' + str(array[n][m])
+            fwrite.write(line + '\n')
     fwrite.close()
