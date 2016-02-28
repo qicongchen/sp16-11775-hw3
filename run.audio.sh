@@ -23,12 +23,12 @@ mkdir -p temp audio mfcc kmeans
 #    (e.g., normalization) and other feature types (e.g., PLPs )     
 cat list/train_dev | awk '{print $1}' > list/train_dev.video
 cat list/train_dev.video list/test.video > list/all.video
-for line in $(cat "list/all.video"); do
-    ffmpeg -y -i $video_path/${line}.mp4 -f wav temp/tmp.wav
-    #ffmpeg -y -i $video_path/${line}.mp4 -ac 1 -f wav audio/$line.wav
-    ch_wave temp/tmp.wav -c 0 -o audio/$line.wav
-    SMILExtract -C config/MFCC12_E_D_A_Z.conf -I audio/$line.wav -O mfcc/$line.mfcc.csv
-done
+#for line in $(cat "list/all.video"); do
+#    ffmpeg -y -i $video_path/${line}.mp4 -f wav temp/tmp.wav
+#    #ffmpeg -y -i $video_path/${line}.mp4 -ac 1 -f wav audio/$line.wav
+#    ch_wave temp/tmp.wav -c 0 -o audio/$line.wav
+#    SMILExtract -C config/MFCC12_E_D_A_Z.conf -I audio/$line.wav -O mfcc/$line.mfcc.csv
+#done
 # You may find the number of MFCC files mfcc/*.mfcc.csv is slightly less than the number of the videos. This is because some of the videos
 # don't hae the audio track. For example, HVC1221, HVC1222, HVC1261, HVC1794 
 
