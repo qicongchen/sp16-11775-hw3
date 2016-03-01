@@ -69,6 +69,8 @@ if __name__ == '__main__':
             else:
                 print video_id
                 line = numpy.genfromtxt(feat_path, delimiter=' ', dtype=str)
+                if len(line.shape) == 0:
+                    line = numpy.array([line])
                 for item in line:
                     if len(item) == 0:
                         continue
