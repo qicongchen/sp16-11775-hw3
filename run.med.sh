@@ -95,8 +95,24 @@ echo "#####################################"
 for event in P001 P002 P003; do
   echo "=========  Event $event ========="
   # now train a svm model
-#    python scripts/train_svm.py $event "-1" "cnn/" "feat" "dense" $feat_dim_cnn cnn_pred/svm.$event.model || exit 1;
-    # apply the svm model to the test videos;
-    # output the score of each test video to a file ${event}_pred 
-#    python scripts/test_svm.py $event "-1" cnn_pred/svm.$event.model "cnn/" "feat" "dense" $feat_dim_cnn cnn_pred/${event}_pred || exit 1;
+  python scripts/train_svm.py $event "-1" "kmeans/" "feat" "dense" $feat_dim_mfcc mfcc_pred/svm.$event.model || exit 1;
+  # apply the svm model to the test videos;
+  # output the score of each test video to a file ${event}_pred 
+  python scripts/test_svm.py $event "-1" mfcc_pred/svm.$event.model "kmeans/" "feat" "dense" $feat_dim_mfcc mfcc_pred/${event}_pred || exit 1;
+done
+# iterate over the events
+for event in P001 P002 P003; do
+  echo "=========  Event $event ========="
+  # now train a svm model
+  python scripts/train_svm.py $event "-1" "cnn/" "feat" "dense" $feat_dim_cnn cnn_pred/svm.$event.model || exit 1;
+  # apply the svm model to the test videos;
+  # output the score of each test video to a file ${event}_pred 
+  python scripts/test_svm.py $event "-1" cnn_pred/svm.$event.model "cnn/" "feat" "dense" $feat_dim_cnn cnn_pred/${event}_pred || exit 1;
+done
+# iterate over the events
+for event in P001 P002 P003; do
+  echo "=========  Event $event ========="
+  # apply the late fusion;
+  # output the score of each validation video to a file ${event}_pred 
+  python scripts/late_fusion.py $event -1 fusion_pred/${event}_pred || exit 1;
 done

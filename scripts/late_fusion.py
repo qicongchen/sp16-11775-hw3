@@ -14,7 +14,10 @@ if __name__ == '__main__':
 
     event_name = sys.argv[1]
     validation_part = sys.argv[2]
-    pred_file_suffix = event_name+"_part"+validation_part+"_pred"
+    if validation_part != "-1":
+        pred_file_suffix = event_name+"_part"+validation_part+"_pred"
+    else:
+        pred_file_suffix = event_name+"_pred"
     pred_files = ["mfcc_pred/"+pred_file_suffix, "asr_pred/"+pred_file_suffix, "cnn_pred/"+pred_file_suffix]
     output_file = sys.argv[3]
 
