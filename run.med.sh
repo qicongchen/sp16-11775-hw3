@@ -71,3 +71,19 @@ for event in P001 P002 P003; do
     ap list/${event}_part${part}_test_label cnn_pred/${event}_part${part}_pred
   done
 done
+
+echo "#####################################"
+echo "#       MED with fusion Features      #"
+echo "#####################################"
+mkdir -p fusion_pred
+# iterate over the events
+for event in P001 P002 P003; do
+  for part in 0 1 2; do
+    echo "=========  Event $event Part $part ========="
+    # apply the late fusion;
+    # output the score of each validation video to a file ${event}_part${part}_pred 
+    python scripts/late_fusion.py $event $part fusion_pred/${event}_part${part}_pred || exit 1;
+    # compute the average precision by calling the mAP package
+    ap list/${event}_part${part}_test_label fusion_pred/${event}_part${part}_pred
+  done
+done
