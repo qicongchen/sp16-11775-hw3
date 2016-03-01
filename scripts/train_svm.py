@@ -77,7 +77,8 @@ if __name__ == '__main__':
                     tokens = item.split(':')
                     key = int(tokens[0])-1
                     value = float(tokens[1])
-                    feature[key] = value
+                    if key < feat_dim:
+                        feature[key] = value
         features.append(feature)
 
     # train svm

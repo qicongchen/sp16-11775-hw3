@@ -61,13 +61,16 @@ if __name__ == '__main__':
                 feature = numpy.genfromtxt(feat_path, delimiter=';')
             else:
                 line = numpy.genfromtxt(feat_path, delimiter=' ', dtype=str)
+                if len(line.shape) == 0:
+                    line = numpy.array([line])
                 for item in line:
                     if len(item) == 0:
                         continue
                     tokens = item.split(':')
                     key = int(tokens[0])-1
                     value = float(tokens[1])
-                    feature[key] = value
+                    if key < feat_dim:
+                        feature[key] = value
         features.append(feature)
 
     # test svm
