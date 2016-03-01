@@ -67,6 +67,7 @@ if __name__ == '__main__':
             if feat_type == 'dense':
                 feature = numpy.genfromtxt(feat_path, delimiter=';')
             else:
+                print video_id
                 line = numpy.genfromtxt(feat_path, delimiter=' ', dtype=str)
                 for item in line:
                     if len(item) == 0:
