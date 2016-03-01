@@ -25,10 +25,10 @@ for event in P001 P002 P003; do
   for part in 0 1 2; do
     echo "=========  Event $event Part $part ========="
     # now train a svm model
-    python scripts/train_svm.py $event $part "kmeans/" "feat" "dense" $feat_dim_mfcc mfcc_pred/svm.$event.part$part.model || exit 1;
+#    python scripts/train_svm.py $event $part "kmeans/" "feat" "dense" $feat_dim_mfcc mfcc_pred/svm.$event.part$part.model || exit 1;
     # apply the svm model to the validation videos;
     # output the score of each validation video to a file ${event}_part${part}_pred 
-    python scripts/test_svm.py $event $part mfcc_pred/svm.$event.part$part.model "kmeans/" "feat" "dense" $feat_dim_mfcc mfcc_pred/${event}_part${part}_pred || exit 1;
+#    python scripts/test_svm.py $event $part mfcc_pred/svm.$event.part$part.model "kmeans/" "feat" "dense" $feat_dim_mfcc mfcc_pred/${event}_part${part}_pred || exit 1;
     # compute the average precision by calling the mAP package
     ap list/${event}_part${part}_test_label mfcc_pred/${event}_part${part}_pred
   done
@@ -44,10 +44,10 @@ for event in P001 P002 P003; do
   for part in 0 1 2; do
     echo "=========  Event $event Part $part ========="
     # now train a svm model
-    python scripts/train_svm.py $event $part "asr_feat/asr_bof/" "bof" "sparse" $feat_dim_asr asr_pred/svm.$event.part$part.model || exit 1;
+#    python scripts/train_svm.py $event $part "asr_feat/asr_bof/" "bof" "sparse" $feat_dim_asr asr_pred/svm.$event.part$part.model || exit 1;
     # apply the svm model to the validation videos;
     # output the score of each validation video to a file ${event}_part${part}_pred 
-    python scripts/test_svm.py $event $part asr_pred/svm.$event.part$part.model "asr_feat/asr_bof/" "bof" "sparse" $feat_dim_asr asr_pred/${event}_part${part}_pred || exit 1;
+#    python scripts/test_svm.py $event $part asr_pred/svm.$event.part$part.model "asr_feat/asr_bof/" "bof" "sparse" $feat_dim_asr asr_pred/${event}_part${part}_pred || exit 1;
     # compute the average precision by calling the mAP package
     ap list/${event}_part${part}_test_label asr_pred/${event}_part${part}_pred
   done
@@ -63,10 +63,10 @@ for event in P001 P002 P003; do
   for part in 0 1 2; do
     echo "=========  Event $event Part $part ========="
     # now train a svm model
-    python scripts/train_svm.py $event $part "cnn/" "feat" "dense" $feat_dim_cnn cnn_pred/svm.$event.part$part.model || exit 1;
+#    python scripts/train_svm.py $event $part "cnn/" "feat" "dense" $feat_dim_cnn cnn_pred/svm.$event.part$part.model || exit 1;
     # apply the svm model to the validation videos;
     # output the score of each validation video to a file ${event}_part${part}_pred 
-    python scripts/test_svm.py $event $part cnn_pred/svm.$event.part$part.model "cnn/" "feat" "dense" $feat_dim_cnn cnn_pred/${event}_part${part}_pred || exit 1;
+#    python scripts/test_svm.py $event $part cnn_pred/svm.$event.part$part.model "cnn/" "feat" "dense" $feat_dim_cnn cnn_pred/${event}_part${part}_pred || exit 1;
     # compute the average precision by calling the mAP package
     ap list/${event}_part${part}_test_label cnn_pred/${event}_part${part}_pred
   done
