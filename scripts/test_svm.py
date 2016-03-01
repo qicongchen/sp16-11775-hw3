@@ -9,8 +9,10 @@ import sys
 # Apply the SVM model to the testing videos; Output the score for each video
 
 if __name__ == '__main__':
-    if len(sys.argv) != 7:
-        print "Usage: {0} model_file feat_dir feat_suffix feat_type feat_dim output_file".format(sys.argv[0])
+    if len(sys.argv) != 9:
+        print "Usage: {0} event_name validation_part model_file feat_dir feat_suffix feat_type feat_dim output_file".format(sys.argv[0])
+        print "event_name -- name of the event (P001, P002 or P003 in Homework 1)"
+        print "validation_part -- part index of the validation file"
         print "model_file -- path of the trained svm file"
         print "feat_dir -- dir of feature files"
         print "feat_suffix -- suffix of feature files, eg: spbof"
@@ -19,24 +21,34 @@ if __name__ == '__main__':
         print "output_file -- path to save the prediction score"
         exit(1)
 
-    model_file = sys.argv[1]
-    feat_dir = sys.argv[2]
-    feat_suffix = sys.argv[3]
-    feat_type = sys.argv[4]
-    feat_dim = int(sys.argv[5])
-    output_file = sys.argv[6]
+    event_name = sys.argv[1]
+    validation_part = sys.argv[2]
+    validation_file = "list/train_dev_part"+validation_part
+    model_file = sys.argv[3]
+    feat_dir = sys.argv[4]
+    feat_suffix = sys.argv[5]
+    feat_type = sys.argv[6]
+    feat_dim = int(sys.argv[7])
+    output_file = sys.argv[8]
 
     # load the kmeans model
     svm = cPickle.load(open(model_file, "rb"))
 
     video_ids = []
     # read in labels
-    label_file = "list/test"
+    label_file = validation_file
     fread_label = open(label_file, 'r')
+    fwrite = open("list/"+event_name+"_part"+validation_part+"_test_label", 'w')
     for line in fread_label.readlines():
         tokens = line.strip().split(' ')
         video_id = tokens[0]
+        if tokens[1] != event_name:
+            label = 0
+        else:
+            label = 1
+        fwrite.write("%d\n" % label)
         video_ids.append(video_id)
+    fwrite.close()
     fread_label.close()
 
     # read in features
