@@ -95,8 +95,8 @@ echo "#####################################"
 for event in P001 P002 P003; do
   echo "=========  Event $event ========="
   # now train a svm model
-#    python scripts/train_svm.py $event "-1" "cnn/" "feat" "dense" $feat_dim_cnn cnn_pred/svm.$event.model || exit 1;
+    python scripts/train_svm.py $event "-1" "cnn/" "feat" "dense" $feat_dim_cnn cnn_pred/svm.$event.model || exit 1;
     # apply the svm model to the test videos;
     # output the score of each test video to a file ${event}_pred 
-#    python scripts/test_svm.py $event "-1" cnn_pred/svm.$event.model "cnn/" "feat" "dense" $feat_dim_cnn cnn_pred/${event}_pred || exit 1;
+    python scripts/test_svm.py $event "-1" cnn_pred/svm.$event.model "cnn/" "feat" "dense" $feat_dim_cnn cnn_pred/${event}_pred || exit 1;
 done
