@@ -32,13 +32,14 @@ if __name__ == '__main__':
 
     validation_video_ids = []
     # read in labels
-    label_file = validation_file
-    fread_label = open(label_file, 'r')
-    for line in fread_label.readlines():
-        tokens = line.strip().split(' ')
-        video_id = tokens[0]
-        validation_video_ids.append(video_id)
-    fread_label.close()
+    if validation_part != "-1":
+        label_file = validation_file
+        fread_label = open(label_file, 'r')
+        for line in fread_label.readlines():
+            tokens = line.strip().split(' ')
+            video_id = tokens[0]
+            validation_video_ids.append(video_id)
+        fread_label.close()
 
     video_ids = []
     # read in labels

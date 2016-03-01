@@ -36,20 +36,29 @@ if __name__ == '__main__':
 
     video_ids = []
     # read in labels
-    label_file = validation_file
-    fread_label = open(label_file, 'r')
-    fwrite = open("list/"+event_name+"_part"+validation_part+"_test_label", 'w')
-    for line in fread_label.readlines():
-        tokens = line.strip().split(' ')
-        video_id = tokens[0]
-        if tokens[1] != event_name:
-            label = 0
-        else:
-            label = 1
-        fwrite.write("%d\n" % label)
-        video_ids.append(video_id)
-    fwrite.close()
-    fread_label.close()
+    if validation_part != "-1":
+        label_file = validation_file
+        fread_label = open(label_file, 'r')
+        fwrite = open("list/"+event_name+"_part"+validation_part+"_test_label", 'w')
+        for line in fread_label.readlines():
+            tokens = line.strip().split(' ')
+            video_id = tokens[0]
+            if tokens[1] != event_name:
+                label = 0
+            else:
+                label = 1
+            fwrite.write("%d\n" % label)
+            video_ids.append(video_id)
+        fwrite.close()
+        fread_label.close()
+    else:
+        label_file = "list/test.video"
+        fread_label = open(label_file, 'r')
+        for line in fread_label.readlines():
+            tokens = line.strip().split(' ')
+            video_id = tokens[0]
+            video_ids.append(video_id)
+        fread_label.close()
 
     # read in features
     features = []
